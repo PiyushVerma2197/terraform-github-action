@@ -22,7 +22,7 @@ jobs:
       with:
         terraform_version: 1.7.0  # Use your required version
 
-    - name: Azure Login via OIDC
+    - name: Azure Login via Service Principal
       uses: azure/login@v2
       with:
         client-id: ${{ secrets.CLIENT_ID }}
