@@ -5,7 +5,8 @@ on:
     branches:
       - master
 
-  # To read the repo content
+permissions:
+  contents: read    # This is enough for repo checkout # To read the repo content
 
 jobs:
   terraform:
@@ -35,7 +36,7 @@ jobs:
       run: terraform validate
 
     - name: Terraform Plan
-      run: terraform plan -var="client_id=${{ secrets.AZURE_CLIENT_ID }}" -var="client_secret=${{ secrets.AZURE_CLIENT_SECRET }}"
+      run: terraform plan -var="client_id=${{ secrets.CLIENT_ID }}" -var="client_secret=${{ secrets.CLIENT_SECRET }}"
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve -var="client_id=${{ secrets.AZURE_CLIENT_ID }}" -var="client_secret=${{ secrets.AZURE_CLIENT_SECRET }}"
+      run: terraform apply -auto-approve -var="client_id=${{ secrets.CLIENT_ID }}" -var="client_secret=${{ secrets.CLIENT_SECRET }}"
