@@ -26,7 +26,7 @@ jobs:
       uses: azure/login@v2
       with:
         auth-type: SERVICE_PRINCIPAL          # 🔴 This is mandatory     
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        creds: ${{ secrets.AZURE_CREDENTIALS1 }}
         # client-id: ${{ secrets.CLIENT_ID }}
         # tenant-id: ${{ secrets.TENANT_ID }}
         # subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
