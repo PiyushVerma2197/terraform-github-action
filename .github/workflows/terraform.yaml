@@ -5,8 +5,8 @@ on:
     branches:
       - master
 
-permissions:
-  contents: read
+# permissions:
+#   contents: read
      # This is enough for repo checkout # To read the repo content
 
 jobs:
@@ -25,11 +25,12 @@ jobs:
     - name: Azure Login via Service Principal
       uses: azure/login@v2
       with:
-        auth-type: SERVICE_PRINCIPAL          # 🔴 This is mandatory     
-        client-id: ${{ secrets.CLIENT_ID }}
-        tenant-id: ${{ secrets.TENANT_ID }}
-        subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
-        client-secret: ${{ secrets.CLIENT_SECRET }}
+        #auth-type: SERVICE_PRINCIPAL          # 🔴 This is mandatory     
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+        # client-id: ${{ secrets.CLIENT_ID }}
+        # tenant-id: ${{ secrets.TENANT_ID }}
+        # subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
+        # client-secret: ${{ secrets.CLIENT_SECRET }}
 
     - name: Terraform Init
       run: terraform init
@@ -38,7 +39,7 @@ jobs:
       run: terraform validate
 
     - name: Terraform Plan
-      run: terraform plan -var="client_id=${{ secrets.CLIENT_ID }}" -var="client_secret=${{ secrets.CLIENT_SECRET }}"
+      run: terraform plan #-var="client_id=${{ secrets.CLIENT_ID }}" -var="client_secret=${{ secrets.CLIENT_SECRET }}"
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve -var="client_id=${{ secrets.CLIENT_ID }}" -var="client_secret=${{ secrets.CLIENT_SECRET }}"
+      run: terraform apply -auto-approve #-var="client_id=${{ secrets.CLIENT_ID }}" -var="client_secret=${{ secrets.CLIENT_SECRET }}"
