@@ -25,8 +25,8 @@ jobs:
     - name: Azure Login via Service Principal
       uses: azure/login@v2
       with:
-        #auth-type: SERVICE_PRINCIPAL          # 🔴 This is mandatory     
-        creds: ${{secrets.AZURE_CREDENTIALS}}
+        auth-type: SERVICE_PRINCIPAL          # 🔴 This is mandatory     
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
         # client-id: ${{ secrets.CLIENT_ID }}
         # tenant-id: ${{ secrets.TENANT_ID }}
         # subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
