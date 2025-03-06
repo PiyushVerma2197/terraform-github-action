@@ -7,7 +7,7 @@ on:
 
 permissions:
   contents: read
-  id-token: write    # This is enough for repo checkout # To read the repo content
+     # This is enough for repo checkout # To read the repo content
 
 jobs:
   terraform:
