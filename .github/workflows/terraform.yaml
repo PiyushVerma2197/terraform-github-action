@@ -1,45 +1,41 @@
-name: 'Terraform Deploy to Azure'
+name: Terraform Deployment
 
 on:
   push:
     branches:
       - master
 
-# permissions:
-#   contents: read
-     # This is enough for repo checkout # To read the repo content
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   terraform:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_version: 1.7.0  # Use your required version
-
-    - name: Azure Login via Service Principal
+    - name: Azure Login (OIDC)
       uses: azure/login@v2
       with:
-        auth-type: SERVICE_PRINCIPAL          # 🔴 This is mandatory     
-        creds: ${{ secrets.AZURE_CREDENTIALS1 }}
-        # client-id: ${{ secrets.CLIENT_ID }}
-        # tenant-id: ${{ secrets.TENANT_ID }}
-        # subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
-        # client-secret: ${{ secrets.CLIENT_SECRET }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        enable-AzPSSession: false
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.6.0
 
     - name: Terraform Init
       run: terraform init
 
-    - name: Terraform Validate
-      run: terraform validate
-
     - name: Terraform Plan
-      run: terraform plan #-var="client_id=${{ secrets.CLIENT_ID }}" -var="client_secret=${{ secrets.CLIENT_SECRET }}"
+      run: terraform plan
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve #-var="client_id=${{ secrets.CLIENT_ID }}" -var="client_secret=${{ secrets.CLIENT_SECRET }}
+      if: github.ref == 'refs/heads/main'
+      run: terraform apply -auto-approve

@@ -10,6 +10,8 @@ terraform {
 provider "azurerm" {
   # Configuration options
    features {}
+
+   use_oidc = true
    
 
 #    subscription_id = var.subscription_id
