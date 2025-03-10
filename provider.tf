@@ -54,7 +54,8 @@ provider "azurerm" {
 
   use_oidc = true
 
-  subscription_id = "e3bf1520-631c-4200-b6e7-dc6ade33c0b7"
+  #subscription_id = "e3bf1520-631c-4200-b6e7-dc6ade33c0b7"
+  subscription_id = var.subscription_id
   #resource_provider_registrations = ["*"]
   #resource_provider_registrations = "all"
 
