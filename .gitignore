@@ -4,4 +4,3 @@
 *.tfstate
 *.tfstate.*
 terraform.tfvars
-*.ppt
