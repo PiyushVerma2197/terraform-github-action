@@ -17,5 +17,5 @@ provider "azurerm" {
   use_oidc = true
 
   # This will force Terraform to pick the subscription from OIDC token
-  skip_provider_registration = true
+  #skip_provider_registration = true
 }
