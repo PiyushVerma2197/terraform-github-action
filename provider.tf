@@ -53,7 +53,12 @@ provider "azurerm" {
   features {}
 
   use_oidc = true
-  resource_provider_registrations = ["*"]
+  #resource_provider_registrations = ["*"]
+  resource_provider_registrations = [
+  "Microsoft.Network",
+  "Microsoft.Compute"
+]
+
 
   # This will force Terraform to pick the subscription from OIDC token
   #skip_provider_registration = true
