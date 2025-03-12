@@ -48,6 +48,7 @@ terraform {
     }
   }
   backend "azurerm" {
+    subscription_id = var.subscription_id
     resource_group_name   = "tfstate-rg12"
     storage_account_name  = "tfstatebackend8750"
     container_name        = "tfstate12"
