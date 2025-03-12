@@ -32,8 +32,17 @@ jobs:
       with:
         terraform_version: 1.6.6  # Always use the latest version
     
+    #- name: Terraform Init
+     # run: terraform init -backend-config=backend.tfvars
+
     - name: Terraform Init
-      run: terraform init -backend-config=backend.tfvars
+      run: |
+        terraform init \
+          -backend-config="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" \
+          -backend-config="resource_group_name=tfstate-rg12" \
+          -backend-config="storage_account_name=tfstatebackend8750" \
+          -backend-config="container_name=tfstate12" \
+          -backend-config="key=terraform.tfstate"
 
     - name: Terraform Plan
       run: terraform plan 
