@@ -38,61 +38,61 @@ jobs:
     - name: Terraform Plan
       run: terraform plan 
 
-    # - name: Terraform Apply
-    #   run: terraform apply -auto-approve
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
 
-    - name: Terraform Destroy
-      run: terraform destroy
-
-
+    # - name: Terraform Destroy
+    #   run: terraform destroy
 
 
-  build:
-    needs: deploy
-    runs-on: ubuntu-latest
 
-    steps:
-      # ✅ Checkout the repository
-      - name: Checkout code
-        uses: actions/checkout@v3
 
-      # ✅ Set up Node.js environment
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+  # build:
+  #   needs: deploy
+  #   runs-on: ubuntu-latest
 
-      # ✅ Install dependencies
-      - name: Install dependencies
-        run: npm install
+  #   steps:
+  #     # ✅ Checkout the repository
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
 
-      # ✅ Build the React application
-      - name: Build the application
-        run: npm run build
+  #     # ✅ Set up Node.js environment
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 18
 
-      # ✅ Login to Azure CLI using OIDC (no secrets exposed)
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  #     # ✅ Install dependencies
+  #     - name: Install dependencies
+  #       run: npm install
 
-      # ✅ Upload build files to Azure Blob Storage
-      - name: Upload to Azure Storage
-        run: |
-          az storage blob upload-batch \
-            --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
-            --destination ${{ secrets.AZURE_STORAGE_CONTAINER }} \
-            --source ./build \
-            --overwrite true
+  #     # ✅ Build the React application
+  #     - name: Build the application
+  #       run: npm run build
 
-      # # ✅ Invalidate Azure CDN (optional)
-      # - name: Purge Azure CDN (Optional)
-      #   run: |
-      #     az cdn endpoint purge \
-      #       --content-paths "/*" \
-      #       --profile-name <your-cdn-profile-name> \
-      #       --name <your-cdn-endpoint-name> \
-      #       --resource-group <your-resource-group-name>
-      #   continue-on-error: true
+  #     # ✅ Login to Azure CLI using OIDC (no secrets exposed)
+  #     - name: Azure Login
+  #       uses: azure/login@v1
+  #       with:
+  #         client-id: ${{ secrets.AZURE_CLIENT_ID }}
+  #         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+  #         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+  #     # ✅ Upload build files to Azure Blob Storage
+  #     - name: Upload to Azure Storage
+  #       run: |
+  #         az storage blob upload-batch \
+  #           --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
+  #           --destination ${{ secrets.AZURE_STORAGE_CONTAINER }} \
+  #           --source ./build \
+  #           --overwrite true
+
+  #     # # ✅ Invalidate Azure CDN (optional)
+  #     # - name: Purge Azure CDN (Optional)
+  #     #   run: |
+  #     #     az cdn endpoint purge \
+  #     #       --content-paths "/*" \
+  #     #       --profile-name <your-cdn-profile-name> \
+  #     #       --name <your-cdn-endpoint-name> \
+  #     #       --resource-group <your-resource-group-name>
+  #     #   continue-on-error: true
