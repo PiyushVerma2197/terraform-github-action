@@ -34,6 +34,14 @@ jobs:
       with:
         terraform_version: 1.6.6  # Always use the latest version
 
+    - name: Test Storage Account Access
+      run: |
+        az storage container list \
+        --account-name tfstatebackend8750 \
+        --auth-mode login \
+        --output table
+    
+
     - name: Terraform Init
       run: terraform init -backend-config=backend.tfvars
 
